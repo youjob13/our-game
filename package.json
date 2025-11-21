@@ -13,7 +13,7 @@
     "pretty": "prettier --write \"src/**/*.ts\" \"src/**/*.html\""
   },
   "prettier": {
-    "printWidth": 140,
+    "printWidth": 100,
     "singleQuote": true,
     "overrides": [
       {
