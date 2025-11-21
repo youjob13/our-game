@@ -8,10 +8,11 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "prepare": "husky"
+    "prepare": "husky",
+    "pretty": "prettier --write \"src/**/*.ts\" \"src/**/*.html\""
   },
   "prettier": {
-    "printWidth": 100,
+    "printWidth": 140,
     "singleQuote": true,
     "overrides": [
       {
