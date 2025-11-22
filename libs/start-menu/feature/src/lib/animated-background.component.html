@@ -1,0 +1,14 @@
+<div class="animated-background">
+  <div class="gradient-layer"></div>
+  <div class="particles-layer">
+    @for (particle of particles; track $index) {
+      <div
+        class="particle"
+        [style.left.%]="particle.x"
+        [style.top.%]="particle.y"
+        [style.animation-duration.s]="particle.duration"
+        [style.animation-delay.s]="particle.delay"
+      ></div>
+    }
+  </div>
+</div>

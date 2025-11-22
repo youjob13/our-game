@@ -1,0 +1,145 @@
+.start-menu-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  padding: 1rem;
+}
+
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3rem;
+  width: 100%;
+  max-width: 500px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.game-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: clamp(1.2rem, 4vw, 2rem);
+  color: #ffffff;
+  text-align: center;
+  text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6);
+  line-height: 1.5;
+  padding: 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border: 4px solid #ffd700;
+  border-radius: 8px;
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.4), inset 0 0 20px rgba(255, 215, 0, 0.1);
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.menu-button {
+  font-family: 'VT323', monospace;
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #00d9ff 0%, #b026ff 100%);
+  color: #ffffff;
+  border: 4px solid #ffffff;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.8);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
+  position: relative;
+  overflow: hidden;
+  touch-action: manipulation;
+  user-select: none;
+  min-height: 60px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: left 0.5s ease;
+  }
+
+  &:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.8);
+    border-color: #ffd700;
+
+    &::before {
+      left: 100%;
+    }
+  }
+
+  &:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.8);
+  }
+
+  &:nth-child(1) {
+    background: linear-gradient(135deg, #ff006e 0%, #ff6d00 100%);
+  }
+
+  &:nth-child(2) {
+    background: linear-gradient(135deg, #00d9ff 0%, #39ff14 100%);
+  }
+
+  &:nth-child(3) {
+    background: linear-gradient(135deg, #b026ff 0%, #ff006e 100%);
+  }
+
+  &:nth-child(4) {
+    background: linear-gradient(135deg, #ff6d00 0%, #ffd700 100%);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Mobile optimizations
+@media (max-width: 640px) {
+  .start-menu-container {
+    padding: 1rem;
+  }
+
+  .menu-content {
+    gap: 2rem;
+  }
+
+  .game-title {
+    padding: 1rem;
+    font-size: 1rem;
+  }
+
+  .button-group {
+    gap: 1rem;
+  }
+
+  .menu-button {
+    padding: 0.875rem 1.5rem;
+    font-size: 1.5rem;
+    min-height: 56px;
+  }
+}
+
+// Prevent text selection on mobile
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+

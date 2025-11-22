@@ -12,7 +12,9 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "preserve",
-    "paths": {},
+    "paths": {
+      "feature": ["libs/start-menu/feature/src/index.ts"]
+    },
     "baseUrl": ".",
     "rootDir": "."
   },
