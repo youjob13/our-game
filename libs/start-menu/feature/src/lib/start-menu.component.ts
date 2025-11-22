@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { AnimatedBackgroundComponent } from './components/background/animated-background.component';
 import { AnimatedGuitarComponent } from './components/guitar/animated-guitar.component';
@@ -16,7 +17,9 @@ interface MenuButton {
   imports: [AnimatedBackgroundComponent, AnimatedGuitarComponent],
 })
 export class StartMenuComponent {
-  protected readonly gameTitle = 'Игра-архив воспоминаний';
+  private readonly router = inject(Router);
+
+  protected readonly gameTitle = 'Архив воспоминаний';
 
   protected readonly menuButtons: MenuButton[] = [
     { label: 'Story Mode', action: 'story' },
@@ -26,7 +29,10 @@ export class StartMenuComponent {
   ];
 
   protected onButtonClick(action: string): void {
-    // Placeholder for future navigation logic
-    console.log(`Button clicked: ${action}`);
+    if (action === 'story') {
+      this.router.navigate(['/cutscene', 'chapter-1']);
+    } else {
+      console.log(`Button clicked: ${action}`);
+    }
   }
 }

@@ -1,0 +1,9 @@
+@if (dialog(); as d) {
+  <div class="dialog-box">
+    <div class="dialog-speaker">{{ d.speaker }}</div>
+    <div class="dialog-text" [class.typing]="isTyping()">
+      {{ d.text }}
+    </div>
+    <div class="dialog-hint">Нажмите для продолжения...</div>
+  </div>
+}

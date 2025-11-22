@@ -1,0 +1,66 @@
+{
+  "id": "chapter-1",
+  "title": "Начало путешествия",
+  "order": 1,
+  "cutscene": {
+    "id": "ch1-intro",
+    "background": "forest-path",
+    "characterPositions": [
+      {
+        "characterName": "Danil",
+        "position": "left",
+        "emotion": "neutral"
+      },
+      {
+        "characterName": "Sanya",
+        "position": "right",
+        "emotion": "neutral"
+      }
+    ],
+    "dialogs": [
+      {
+        "speaker": "Danil",
+        "text": "Саня, посмотри на это место... Здесь всё выглядит таким необычным.",
+        "emotion": "neutral",
+        "displayDuration": 3000
+      },
+      {
+        "speaker": "Sanya",
+        "text": "Да, я чувствую что-то странное. Как будто воздух здесь пропитан воспоминаниями.",
+        "emotion": "neutral",
+        "displayDuration": 3000
+      },
+      {
+        "speaker": "Danil",
+        "text": "Именно поэтому мы здесь. Архив воспоминаний должен быть где-то рядом.",
+        "emotion": "neutral",
+        "displayDuration": 3000
+      },
+      {
+        "speaker": "Sanya",
+        "text": "Ты уверен, что хочешь это сделать? Может быть, некоторые воспоминания лучше оставить в прошлом?",
+        "emotion": "sad",
+        "displayDuration": 3500
+      },
+      {
+        "speaker": "Danil",
+        "text": "Нет, Саня. Я должен узнать правду. Мы должны узнать, что произошло тогда.",
+        "emotion": "neutral",
+        "displayDuration": 3000
+      },
+      {
+        "speaker": "Sanya",
+        "text": "Хорошо... Тогда пойдём вместе. Что бы мы ни нашли, мы справимся с этим вдвоём.",
+        "emotion": "happy",
+        "displayDuration": 3000
+      },
+      {
+        "speaker": "Danil",
+        "text": "Спасибо. Я знал, что могу на тебя рассчитывать. Давай начнём это приключение!",
+        "emotion": "happy",
+        "displayDuration": 3000
+      }
+    ]
+  }
+}
+

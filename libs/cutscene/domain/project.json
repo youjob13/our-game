@@ -1,0 +1,19 @@
+{
+  "name": "cutscene-domain",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/cutscene/domain/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/cutscene/domain",
+        "main": "libs/cutscene/domain/src/index.ts",
+        "tsConfig": "libs/cutscene/domain/tsconfig.lib.json",
+        "assets": ["libs/cutscene/domain/*.md"]
+      }
+    }
+  }
+}

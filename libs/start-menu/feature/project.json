@@ -2,7 +2,7 @@
   "name": "feature",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "libs/start-menu/feature/src",
-  "prefix": "lib",
+  "prefix": "sml-lib",
   "projectType": "library",
   "tags": [],
   "targets": {

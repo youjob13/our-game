@@ -1,0 +1,54 @@
+<div class="cutscene-container">
+  <!-- Background -->
+  <div class="cutscene-background" [attr.data-bg]="facade.currentCutscene()?.background">
+    <div class="background-overlay"></div>
+  </div>
+
+  <!-- Characters -->
+  <div class="characters-layer">
+    @if (leftCharacter(); as leftChar) {
+      <div class="character-left">
+        <sml-lib-character-sprite
+          [character]="leftChar"
+          [isSpeaking]="isSpeaking(leftChar.characterName)"
+        />
+      </div>
+    }
+
+    @if (rightCharacter(); as rightChar) {
+      <div class="character-right">
+        <sml-lib-character-sprite
+          [character]="rightChar"
+          [isSpeaking]="isSpeaking(rightChar.characterName)"
+        />
+      </div>
+    }
+  </div>
+
+  <!-- Dialog UI -->
+  <div class="dialog-layer">
+    <!-- Progress indicator -->
+    <div class="progress-bar">
+      <div class="progress-fill" [style.width.%]="facade.progress()"></div>
+    </div>
+
+    <!-- Dialog box -->
+    <div class="dialog-container">
+      <sml-lib-dialog-box [dialog]="facade.currentDialog()" />
+    </div>
+
+    <!-- Skip button -->
+    <button class="skip-button" (click)="handleSkip()">Пропустить (ESC)</button>
+  </div>
+
+  <!-- Completion screen -->
+  @if (facade.isCompleted()) {
+    <div class="completion-overlay">
+      <div class="completion-content">
+        <h2>Глава завершена</h2>
+        <p>{{ facade.currentChapter()?.title }}</p>
+        <button class="continue-button" (click)="cutsceneComplete.emit()">Продолжить</button>
+      </div>
+    </div>
+  }
+</div>
