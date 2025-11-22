@@ -1,66 +1,103 @@
 {
   "id": "chapter-1",
-  "title": "Начало путешествия",
+  "title": "Возвращение домой",
   "order": 1,
   "cutscene": {
     "id": "ch1-intro",
-    "background": "forest-path",
-    "characterPositions": [
+    "background": {
+      "type": "image",
+      "asset": "/backgrounds/airport-terminal.png"
+    },
+    "audio": {
+      "backgroundMusic": "/assets/music/ambient-airport.mp3",
+      "autoLoop": true
+    },
+    "characters": [
       {
-        "characterName": "Danil",
+        "id": "danil",
+        "displayName": "Danil",
         "position": "left",
-        "emotion": "neutral"
+        "initialEmotion": "neutral"
       },
       {
-        "characterName": "Sanya",
+        "id": "sanya",
+        "displayName": "Sanya",
         "position": "right",
-        "emotion": "neutral"
+        "initialEmotion": "neutral"
       }
     ],
     "dialogs": [
       {
-        "speaker": "Danil",
-        "text": "Саня, посмотри на это место... Здесь всё выглядит таким необычным.",
+        "speaker": "danil",
+        "text": "Саня, я в аэропорту. Через час вылет в Москву.",
         "emotion": "neutral",
         "displayDuration": 3000
       },
       {
-        "speaker": "Sanya",
-        "text": "Да, я чувствую что-то странное. Как будто воздух здесь пропитан воспоминаниями.",
-        "emotion": "neutral",
+        "speaker": "sanya",
+        "text": "Как съездил? Армения понравилась?",
+        "emotion": "happy",
+        "displayDuration": 2500
+      },
+      {
+        "speaker": "danil",
+        "text": "Да, было отлично. Но соскучился по дому, честно говоря.",
+        "emotion": "happy",
         "displayDuration": 3000
       },
       {
-        "speaker": "Danil",
-        "text": "Именно поэтому мы здесь. Архив воспоминаний должен быть где-то рядом.",
-        "emotion": "neutral",
+        "speaker": "sanya",
+        "text": "Понимаю. Слушай, я тут кое-что нашёл, пока тебя не было...",
+        "emotion": "confused",
         "displayDuration": 3000
       },
       {
-        "speaker": "Sanya",
-        "text": "Ты уверен, что хочешь это сделать? Может быть, некоторые воспоминания лучше оставить в прошлом?",
-        "emotion": "sad",
+        "speaker": "danil",
+        "text": "Что нашёл? Ты меня интригуешь.",
+        "emotion": "surprised",
+        "displayDuration": 2500
+      },
+      {
+        "speaker": "sanya",
+        "text": "Помнишь, мы говорили о тех старых воспоминаниях? Я нашёл способ их восстановить.",
+        "emotion": "excited",
         "displayDuration": 3500
       },
       {
-        "speaker": "Danil",
-        "text": "Нет, Саня. Я должен узнать правду. Мы должны узнать, что произошло тогда.",
+        "speaker": "danil",
+        "text": "Серьёзно? Это же... это может всё изменить.",
+        "emotion": "surprised",
+        "displayDuration": 3000
+      },
+      {
+        "speaker": "sanya",
+        "text": "Именно. Когда прилетишь, сразу приезжай ко мне. Покажу что нашёл.",
         "emotion": "neutral",
         "displayDuration": 3000
       },
       {
-        "speaker": "Sanya",
-        "text": "Хорошо... Тогда пойдём вместе. Что бы мы ни нашли, мы справимся с этим вдвоём.",
+        "speaker": "danil",
+        "text": "Хорошо. Объявили посадку на рейс. Скоро увидимся!",
         "emotion": "happy",
         "displayDuration": 3000
       },
       {
-        "speaker": "Danil",
-        "text": "Спасибо. Я знал, что могу на тебя рассчитывать. Давай начнём это приключение!",
+        "speaker": "sanya",
+        "text": "До встречи, Даня. Удачного полёта!",
         "emotion": "happy",
-        "displayDuration": 3000
+        "displayDuration": 2500
+      },
+      {
+        "speaker": "danil",
+        "text": "Пора идти на посадку. Наше приключение начинается...",
+        "emotion": "excited",
+        "displayDuration": 3500
       }
-    ]
+    ],
+    "metadata": {
+      "location": "Yerevan Airport",
+      "scene": "phone-call",
+      "chapter": "intro"
+    }
   }
 }
-

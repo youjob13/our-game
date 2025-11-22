@@ -1,0 +1,19 @@
+{
+  "name": "domain",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/customization/domain/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/customization/domain",
+        "main": "libs/customization/domain/src/index.ts",
+        "tsConfig": "libs/customization/domain/tsconfig.lib.json",
+        "assets": ["libs/customization/domain/*.md"]
+      }
+    }
+  }
+}

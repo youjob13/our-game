@@ -12,7 +12,7 @@ export class Chapter {
     public readonly id: string,
     public readonly title: string,
     public readonly order: number,
-    private readonly cutscene: Cutscene
+    private readonly cutscene: Cutscene,
   ) {}
 
   static create(data: ChapterData): Chapter {
@@ -37,4 +37,3 @@ export class Chapter {
     return this.cutscene;
   }
 }
-

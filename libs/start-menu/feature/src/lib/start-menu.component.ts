@@ -24,13 +24,14 @@ export class StartMenuComponent {
   protected readonly menuButtons: MenuButton[] = [
     { label: 'Story Mode', action: 'story' },
     { label: 'Chapters', action: 'chapters' },
-    { label: 'Settings', action: 'settings' },
     { label: 'Customization', action: 'customization' },
   ];
 
   protected onButtonClick(action: string): void {
     if (action === 'story') {
       this.router.navigate(['/cutscene', 'chapter-1']);
+    } else if (action === 'customization') {
+      this.router.navigate(['/customization']);
     } else {
       console.log(`Button clicked: ${action}`);
     }

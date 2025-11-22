@@ -1,0 +1,8 @@
+@if (characterComponent(); as component) {
+  <ng-container *ngComponentOutlet="component; inputs: componentInputs()" />
+} @else {
+  <div class="character-error">
+    <p>Character "{{ characterId() }}" not found</p>
+    <p class="available">Available: {{ registry.getRegisteredIds().join(', ') || 'none' }}</p>
+  </div>
+}

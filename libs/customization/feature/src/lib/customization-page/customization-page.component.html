@@ -1,0 +1,31 @@
+<div class="customization-page">
+  <div class="page-header">
+    <button class="back-button" type="button" (click)="onBack()">← Back</button>
+    <h1 class="page-title">Character Customization</h1>
+    <p class="page-description">Select appearance presets for your characters in story mode</p>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-container">
+      <div class="loading-spinner"></div>
+      <p>Loading customization options...</p>
+    </div>
+  } @else if (error()) {
+    <div class="error-container">
+      <p class="error-message">{{ error() }}</p>
+      <button class="retry-button" type="button" (click)="ngOnInit()">Retry</button>
+    </div>
+  } @else {
+    <div class="selectors-container">
+      @for (selector of characterSelectors(); track selector.characterId) {
+        <sml-lib-character-preset-selector
+          [characterId]="selector.characterId"
+          [characterName]="selector.characterName"
+          [presets]="selector.presets"
+          [selectedPreset]="selector.selectedPreset"
+          (presetSelected)="onPresetSelected($event)"
+        />
+      }
+    </div>
+  }
+</div>

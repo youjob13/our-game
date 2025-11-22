@@ -18,7 +18,12 @@
       "@cutscene/application": ["libs/cutscene/application/src/index.ts"],
       "@cutscene/infrastructure": ["libs/cutscene/infrastructure/src/index.ts"],
       "@cutscene/feature": ["libs/cutscene/feature/src/index.ts"],
-      "@cutscene/ui": ["libs/cutscene/ui/src/index.ts"]
+      "@cutscene/ui": ["libs/cutscene/ui/src/index.ts"],
+      "@customization/domain": ["libs/customization/domain/src/index.ts"],
+      "@customization/application": ["libs/customization/application/src/index.ts"],
+      "@customization/infrastructure": ["libs/customization/infrastructure/src/index.ts"],
+      "@customization/ui": ["libs/customization/ui/src/index.ts"],
+      "@customization/feature": ["libs/customization/feature/src/index.ts"]
     },
     "baseUrl": ".",
     "rootDir": "."

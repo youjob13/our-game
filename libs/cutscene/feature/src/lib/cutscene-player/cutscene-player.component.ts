@@ -8,16 +8,22 @@ import {
   computed,
   effect,
 } from '@angular/core';
+import { CustomizationFacade } from '@customization/application';
 import { CutsceneFacade } from '@cutscene/application';
+import { Emotion } from '@cutscene/domain';
 import { CutsceneRepository } from '@cutscene/infrastructure';
-import { DialogBoxComponent, CharacterSpriteComponent } from '@cutscene/ui';
+import {
+  DialogBoxComponent,
+  CharacterSpriteComponent,
+  BackgroundRendererComponent,
+} from '@cutscene/ui';
 
 @Component({
   selector: 'sml-lib-cutscene-player',
   templateUrl: './cutscene-player.component.html',
   styleUrl: './cutscene-player.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [DialogBoxComponent, CharacterSpriteComponent],
+  imports: [DialogBoxComponent, CharacterSpriteComponent, BackgroundRendererComponent],
   host: {
     '(click)': 'handleClick()',
     '(keydown.space)': 'handleSpaceKey()',
@@ -30,6 +36,7 @@ import { DialogBoxComponent, CharacterSpriteComponent } from '@cutscene/ui';
 export class CutscenePlayerComponent implements OnInit {
   protected readonly facade = inject(CutsceneFacade);
   private readonly repository = inject(CutsceneRepository);
+  private readonly customizationFacade = inject(CustomizationFacade);
 
   readonly chapterId = input.required<string>();
   readonly cutsceneComplete = output<void>();
@@ -41,7 +48,16 @@ export class CutscenePlayerComponent implements OnInit {
 
   protected readonly characterPositions = computed(() => {
     const cutscene = this.facade.currentCutscene();
-    return cutscene?.getCharacterPositions() ?? [];
+    const positions = cutscene?.getCharacterPositions() ?? [];
+
+    return positions.map((position) => {
+      const customVariantId = this.customizationFacade.getVariantForCharacter(position.id);
+      return {
+        ...position,
+        variantId: customVariantId,
+        getAssetPath: (emotion: Emotion) => position.getAssetPath(emotion),
+      };
+    });
   });
 
   protected readonly leftCharacter = computed(() => {
@@ -50,6 +66,11 @@ export class CutscenePlayerComponent implements OnInit {
 
   protected readonly rightCharacter = computed(() => {
     return this.characterPositions().find((c) => c.position === 'right') ?? null;
+  });
+
+  protected readonly currentSpeakerEmotion = computed(() => {
+    const dialog = this.facade.currentDialog();
+    return dialog?.emotion ?? 'neutral';
   });
 
   constructor() {
@@ -63,6 +84,7 @@ export class CutscenePlayerComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     try {
+      await this.customizationFacade.initialize();
       const chapter = await this.repository.getChapterById(this.chapterId());
       this.facade.startChapter(chapter);
     } catch (error) {

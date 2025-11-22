@@ -1,0 +1,46 @@
+{
+  "id": "chapter-X",
+  "title": "Chapter Title",
+  "order": 1,
+  "cutscene": {
+    "id": "unique-cutscene-id",
+    "background": {
+      "type": "image",
+      "asset": "/assets/backgrounds/your-background.jpg"
+    },
+    "audio": {
+      "backgroundMusic": "/assets/music/your-music.mp3",
+      "autoLoop": true
+    },
+    "characters": [
+      {
+        "id": "character-id",
+        "displayName": "Character Display Name",
+        "position": "left",
+        "initialEmotion": "neutral"
+      }
+    ],
+    "dialogs": [
+      {
+        "speaker": "character-id",
+        "text": "Dialog text here",
+        "emotion": "happy",
+        "displayDuration": 3000
+      }
+    ],
+    "metadata": {}
+  },
+  "_comments": {
+    "background.type": "Options: 'image', 'video', 'svg', 'component'",
+    "background.asset": "For image/video/svg: path to asset. For component: registered component name",
+    "audio": "Optional. Omit if no background music needed",
+    "characters": "Array with 1-2 characters. Min 1, max 2",
+    "position": "Options: 'left', 'right', 'center'",
+    "initialEmotion": "Starting emotion for character. Options: 'neutral', 'happy', 'sad', 'angry', 'surprised', 'confused', 'excited'",
+    "speaker": "Must match a character id",
+    "emotion": "Emotion during this dialog. Will change character sprite. Same options as initialEmotion",
+    "displayDuration": "Duration in milliseconds. Default: 3000",
+    "metadata": "Optional. Use for custom extensions without breaking config schema",
+    "assetConvention": "Character sprites auto-resolve to: /assets/characters/{character-id}/{emotion}.png"
+  }
+}

@@ -1,0 +1,13 @@
+<div class="character-preset-selector">
+  <h2 class="character-name">{{ characterName() }}</h2>
+
+  <div class="presets-grid">
+    @for (preset of presets(); track preset.variantId) {
+      <sml-lib-preset-card
+        [preset]="preset"
+        [selected]="isSelected(preset)"
+        (presetSelected)="onPresetSelect($event)"
+      />
+    }
+  </div>
+</div>

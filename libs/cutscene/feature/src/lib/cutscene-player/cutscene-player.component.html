@@ -1,8 +1,9 @@
 <div class="cutscene-container">
   <!-- Background -->
-  <div class="cutscene-background" [attr.data-bg]="facade.currentCutscene()?.background">
+  @if (facade.currentBackground(); as background) {
+    <sml-lib-background-renderer [background]="background" />
     <div class="background-overlay"></div>
-  </div>
+  }
 
   <!-- Characters -->
   <div class="characters-layer">
@@ -10,7 +11,8 @@
       <div class="character-left">
         <sml-lib-character-sprite
           [character]="leftChar"
-          [isSpeaking]="isSpeaking(leftChar.characterName)"
+          [isSpeaking]="isSpeaking(leftChar.id)"
+          [speakerEmotion]="currentSpeakerEmotion()"
         />
       </div>
     }
@@ -19,7 +21,8 @@
       <div class="character-right">
         <sml-lib-character-sprite
           [character]="rightChar"
-          [isSpeaking]="isSpeaking(rightChar.characterName)"
+          [isSpeaking]="isSpeaking(rightChar.id)"
+          [speakerEmotion]="currentSpeakerEmotion()"
         />
       </div>
     }

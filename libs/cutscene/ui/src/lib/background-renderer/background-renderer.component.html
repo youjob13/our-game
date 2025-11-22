@@ -1,0 +1,34 @@
+@switch (background().type) {
+  @case ('image') {
+    <img
+      [ngSrc]="resolvedAsset()"
+      alt="Cutscene background"
+      fill
+      priority
+      class="background-image"
+    />
+  }
+  @case ('video') {
+    <video
+      [src]="resolvedAsset()"
+      [loop]="background().loop"
+      [muted]="background().muted"
+      autoplay
+      class="background-video"
+    >
+      Your browser does not support video playback.
+    </video>
+  }
+  @case ('svg') {
+    <object [data]="resolvedAsset()" type="image/svg+xml" class="background-svg">
+      Background SVG
+    </object>
+  }
+  @case ('component') {
+    @if (componentToRender(); as component) {
+      <ng-container *ngComponentOutlet="component" />
+    } @else {
+      <div class="background-error">Background component not found</div>
+    }
+  }
+}

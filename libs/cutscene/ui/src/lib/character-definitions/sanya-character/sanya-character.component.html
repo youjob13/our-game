@@ -1,0 +1,155 @@
+<svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg" class="character-svg">
+  <!-- Female character - Sanya based on photo -->
+
+  <!-- Hair - top cap/crown -->
+  <ellipse cx="100" cy="42" rx="40" ry="28" [attr.fill]="hairColor()" />
+  <rect x="60" y="45" width="80" height="25" [attr.fill]="hairColor()" />
+
+  <!-- Long straight hair sections - left side -->
+  <rect x="60" y="60" width="16" height="140" [attr.fill]="hairColor()" rx="8" />
+
+  <!-- Long straight hair sections - right side -->
+  <rect x="124" y="60" width="16" height="140" [attr.fill]="hairColor()" rx="8" />
+
+  <!-- Head/Face (feminine, oval) -->
+  <ellipse cx="100" cy="72" rx="32" ry="36" [attr.fill]="skinTone()" />
+
+  <!-- Neck (slender) -->
+  <rect x="88" y="100" width="24" height="20" [attr.fill]="skinTone()" rx="3" />
+
+  <!-- Body/Tank top (white/light) -->
+  <path
+    d="M 70 120 L 75 125 L 75 210 L 125 210 L 125 125 L 130 120 L 120 120 L 115 130 L 85 130 L 80 120 Z"
+    [attr.fill]="shirtColor()"
+    stroke="#e0e0e0"
+    stroke-width="1"
+  />
+
+  <!-- Shoulders/Straps -->
+  <rect x="78" y="120" width="8" height="15" [attr.fill]="shirtColor()" rx="2" />
+  <rect x="114" y="120" width="8" height="15" [attr.fill]="shirtColor()" rx="2" />
+
+  <!-- Arms (slender, feminine) -->
+  <rect x="56" y="135" width="14" height="50" [attr.fill]="skinTone()" rx="7" />
+  <rect x="130" y="135" width="14" height="50" [attr.fill]="skinTone()" rx="7" />
+
+  <!-- Hands (small, delicate) -->
+  <ellipse cx="63" cy="190" rx="9" ry="8" [attr.fill]="skinTone()" />
+  <ellipse cx="137" cy="190" rx="9" ry="8" [attr.fill]="skinTone()" />
+
+  <!-- Pants/Jeans (slim fit) -->
+  <rect x="78" y="210" width="20" height="85" [attr.fill]="pantsColor()" rx="3" />
+  <rect x="102" y="210" width="20" height="85" [attr.fill]="pantsColor()" rx="3" />
+
+  <!-- Shoes (simple, feminine) -->
+  <ellipse cx="88" cy="300" rx="14" ry="7" fill="#2c2c2c" />
+  <ellipse cx="112" cy="300" rx="14" ry="7" fill="#2c2c2c" />
+
+  <!-- Face features -->
+  <g class="face">
+    <!-- Eyebrows (thin, feminine, arched) -->
+    @switch (emotion()) {
+      @case ('angry') {
+        <path d="M 78 62 Q 84 60 90 62" stroke="#3d2817" stroke-width="2" fill="none" />
+        <path d="M 110 62 Q 116 60 122 62" stroke="#3d2817" stroke-width="2" fill="none" />
+      }
+      @case ('surprised') {
+        <path d="M 78 60 Q 84 56 90 60" stroke="#3d2817" stroke-width="2" fill="none" />
+        <path d="M 110 60 Q 116 56 122 60" stroke="#3d2817" stroke-width="2" fill="none" />
+      }
+      @case ('sad') {
+        <path d="M 78 64 Q 84 62 90 63" stroke="#3d2817" stroke-width="2" fill="none" />
+        <path d="M 110 63 Q 116 62 122 64" stroke="#3d2817" stroke-width="2" fill="none" />
+      }
+      @default {
+        <path d="M 78 62 Q 84 60 90 62" stroke="#3d2817" stroke-width="2" fill="none" />
+        <path d="M 110 62 Q 116 60 122 62" stroke="#3d2817" stroke-width="2" fill="none" />
+      }
+    }
+
+    <!-- Eyes (larger, expressive, feminine) -->
+    @switch (emotion()) {
+      @case ('happy') {
+        <path d="M 81 72 Q 84 76 87 72" stroke="#000" stroke-width="2.5" fill="none" />
+        <path d="M 113 72 Q 116 76 119 72" stroke="#000" stroke-width="2.5" fill="none" />
+      }
+      @case ('surprised') {
+        <circle cx="84" cy="73" r="5" fill="#000" />
+        <circle cx="116" cy="73" r="5" fill="#000" />
+        <circle cx="83" cy="71" r="2" fill="#fff" />
+        <circle cx="115" cy="71" r="2" fill="#fff" />
+      }
+      @case ('sad') {
+        <ellipse cx="84" cy="73" rx="4" ry="5.5" fill="#000" />
+        <ellipse cx="116" cy="73" rx="4" ry="5.5" fill="#000" />
+      }
+      @case ('angry') {
+        <ellipse cx="84" cy="75" rx="4.5" ry="3.5" fill="#000" />
+        <ellipse cx="116" cy="75" rx="4.5" ry="3.5" fill="#000" />
+      }
+      @case ('confused') {
+        <circle cx="84" cy="73" r="4" fill="#000" />
+        <ellipse cx="116" cy="73" rx="3.5" ry="5" fill="#000" />
+      }
+      @case ('excited') {
+        <circle cx="84" cy="73" r="5.5" fill="#000" />
+        <circle cx="116" cy="73" r="5.5" fill="#000" />
+        <circle cx="82" cy="71" r="2.5" fill="#fff" />
+        <circle cx="114" cy="71" r="2.5" fill="#fff" />
+      }
+      @default {
+        <circle cx="84" cy="73" r="4" fill="#000" />
+        <circle cx="116" cy="73" r="4" fill="#000" />
+        <circle cx="83" cy="71" r="1.5" fill="#fff" />
+        <circle cx="115" cy="71" r="1.5" fill="#fff" />
+      }
+    }
+
+    <!-- Nose (small, subtle) -->
+    <line x1="100" y1="78" x2="100" y2="83" stroke="#d4a574" stroke-width="1.5" opacity="0.4" />
+
+    <!-- Mouth (smaller, feminine) -->
+    @switch (emotion()) {
+      @case ('happy') {
+        <path d="M 88 90 Q 100 98 112 90" stroke="#c97777" stroke-width="2.5" fill="none" />
+      }
+      @case ('excited') {
+        <path d="M 88 90 Q 100 100 112 90" stroke="#c97777" stroke-width="2.5" fill="none" />
+        <ellipse cx="100" cy="94" rx="9" ry="6" fill="#fff" opacity="0.6" />
+      }
+      @case ('sad') {
+        <path d="M 88 93 Q 100 88 112 93" stroke="#c97777" stroke-width="2.5" fill="none" />
+      }
+      @case ('angry') {
+        <line x1="88" y1="91" x2="112" y2="91" stroke="#c97777" stroke-width="2.5" />
+      }
+      @case ('surprised') {
+        <ellipse cx="100" cy="92" rx="6" ry="8" fill="#c97777" opacity="0.8" />
+      }
+      @case ('confused') {
+        <path
+          d="M 88 91 Q 94 93 100 91 Q 106 89 112 91"
+          stroke="#c97777"
+          stroke-width="2.5"
+          fill="none"
+        />
+      }
+      @default {
+        <line x1="90" y1="91" x2="110" y2="91" stroke="#c97777" stroke-width="2" />
+      }
+    }
+  </g>
+
+  <!-- Variant-specific details -->
+  @if (variant() === 'formal') {
+    <!-- Light jacket/cardigan -->
+    <rect x="65" y="125" width="70" height="85" [attr.fill]="shirtColor()" opacity="0.7" rx="4" />
+    <line x1="100" y1="125" x2="100" y2="210" stroke="#d0d0d0" stroke-width="2" />
+  }
+
+  @if (variant() === 'casual') {
+    <!-- Necklace (simple) -->
+    <ellipse cx="100" cy="112" rx="2" ry="2" fill="#ffd700" />
+    <path d="M 92 108 Q 100 110 108 108" stroke="#ffd700" stroke-width="1.5" fill="none" />
+  }
+</svg>

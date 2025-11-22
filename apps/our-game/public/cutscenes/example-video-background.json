@@ -1,0 +1,39 @@
+{
+  "id": "example-video",
+  "title": "Example with Video Background",
+  "order": 99,
+  "cutscene": {
+    "id": "video-example",
+    "background": {
+      "type": "video",
+      "asset": "/assets/backgrounds/animated-forest.mp4",
+      "loop": true,
+      "muted": true
+    },
+    "audio": {
+      "backgroundMusic": "/assets/music/ambient-theme.mp3",
+      "autoLoop": true
+    },
+    "characters": [
+      {
+        "id": "protagonist",
+        "displayName": "Protagonist",
+        "position": "center",
+        "initialEmotion": "neutral"
+      }
+    ],
+    "dialogs": [
+      {
+        "speaker": "protagonist",
+        "text": "This cutscene demonstrates a video background with looping music.",
+        "emotion": "excited",
+        "displayDuration": 3500
+      }
+    ],
+    "metadata": {
+      "chapter": "tutorial",
+      "skippable": true
+    }
+  }
+}
+

@@ -1,0 +1,165 @@
+<svg viewBox="0 0 200 320" xmlns="http://www.w3.org/2000/svg" class="character-svg">
+  <!-- Flat minimalist design matching photo -->
+
+  <!-- Hair - prominent dark brown covering top and sides -->
+  <ellipse cx="100" cy="40" rx="42" ry="28" [attr.fill]="hairColor()" />
+  <!-- Hair sides -->
+  <path d="M 60 45 Q 58 55 60 65 L 65 60 Q 63 50 60 45" [attr.fill]="hairColor()" />
+  <path d="M 140 45 Q 142 55 140 65 L 135 60 Q 137 50 140 45" [attr.fill]="hairColor()" />
+  <!-- Front hair coverage -->
+  <ellipse cx="100" cy="52" rx="40" ry="18" [attr.fill]="hairColor()" />
+
+  <!-- Head/Face -->
+  <ellipse cx="100" cy="70" rx="35" ry="38" [attr.fill]="skinTone()" />
+
+  <!-- Ears (small, on sides) -->
+  <ellipse cx="66" cy="70" rx="6" ry="10" [attr.fill]="skinTone()" />
+  <ellipse cx="134" cy="70" rx="6" ry="10" [attr.fill]="skinTone()" />
+
+  <!-- Neck -->
+  <rect x="88" y="100" width="24" height="18" [attr.fill]="skinTone()" rx="2" />
+
+  <!-- Body/Shirt (hoodie) -->
+  <rect x="60" y="118" width="80" height="95" [attr.fill]="shirtColor()" rx="4" />
+
+  <!-- Hoodie collar/hood detail -->
+  <path d="M 85 118 Q 100 115 115 118" stroke="#3a3a3a" stroke-width="2" fill="none" />
+
+  <!-- Left Arm -->
+  <rect x="42" y="130" width="18" height="55" [attr.fill]="shirtColor()" rx="9" />
+
+  <!-- Right Arm -->
+  <rect x="140" y="130" width="18" height="55" [attr.fill]="shirtColor()" rx="9" />
+
+  <!-- Left Hand -->
+  <ellipse cx="51" cy="190" rx="11" ry="9" [attr.fill]="skinTone()" />
+
+  <!-- Right Hand -->
+  <ellipse cx="149" cy="190" rx="11" ry="9" [attr.fill]="skinTone()" />
+
+  <!-- Pants/Legs (dark blue jeans) -->
+  <rect x="70" y="213" width="25" height="82" [attr.fill]="pantsColor()" rx="3" />
+  <rect x="105" y="213" width="25" height="82" [attr.fill]="pantsColor()" rx="3" />
+
+  <!-- Shoes (black) -->
+  <ellipse cx="82" cy="300" rx="16" ry="8" fill="#1a1a1a" />
+  <ellipse cx="118" cy="300" rx="16" ry="8" fill="#1a1a1a" />
+
+  <!-- Face features -->
+  <g class="face">
+    <!-- Eyebrows (visible, dark) -->
+    @switch (emotion()) {
+      @case ('angry') {
+        <line x1="80" y1="65" x2="92" y2="67" stroke="#3d2817" stroke-width="2.5" />
+        <line x1="108" y1="67" x2="120" y2="65" stroke="#3d2817" stroke-width="2.5" />
+      }
+      @case ('surprised') {
+        <path d="M 80 63 Q 86 60 92 63" stroke="#3d2817" stroke-width="2.5" fill="none" />
+        <path d="M 108 63 Q 114 60 120 63" stroke="#3d2817" stroke-width="2.5" fill="none" />
+      }
+      @case ('sad') {
+        <line x1="80" y1="68" x2="92" y2="66" stroke="#3d2817" stroke-width="2.5" />
+        <line x1="108" y1="66" x2="120" y2="68" stroke="#3d2817" stroke-width="2.5" />
+      }
+      @default {
+        <line x1="80" y1="66" x2="92" y2="66" stroke="#3d2817" stroke-width="2.5" />
+        <line x1="108" y1="66" x2="120" y2="66" stroke="#3d2817" stroke-width="2.5" />
+      }
+    }
+
+    <!-- Eyes -->
+    @switch (emotion()) {
+      @case ('happy') {
+        <path d="M 83 75 Q 86 78 89 75" stroke="#000" stroke-width="2.5" fill="none" />
+        <path d="M 111 75 Q 114 78 117 75" stroke="#000" stroke-width="2.5" fill="none" />
+      }
+      @case ('surprised') {
+        <circle cx="86" cy="76" r="4.5" fill="#000" />
+        <circle cx="114" cy="76" r="4.5" fill="#000" />
+        <circle cx="85" cy="74" r="1.5" fill="#fff" />
+        <circle cx="113" cy="74" r="1.5" fill="#fff" />
+      }
+      @case ('sad') {
+        <ellipse cx="86" cy="76" rx="3.5" ry="5" fill="#000" />
+        <ellipse cx="114" cy="76" rx="3.5" ry="5" fill="#000" />
+      }
+      @case ('angry') {
+        <ellipse cx="86" cy="78" rx="4" ry="3" fill="#000" />
+        <ellipse cx="114" cy="78" rx="4" ry="3" fill="#000" />
+      }
+      @case ('confused') {
+        <circle cx="86" cy="76" r="3.5" fill="#000" />
+        <ellipse cx="114" cy="76" rx="3" ry="4" fill="#000" />
+      }
+      @case ('excited') {
+        <circle cx="86" cy="76" r="5" fill="#000" />
+        <circle cx="114" cy="76" r="5" fill="#000" />
+        <circle cx="84" cy="74" r="2" fill="#fff" />
+        <circle cx="112" cy="74" r="2" fill="#fff" />
+      }
+      @default {
+        <circle cx="86" cy="76" r="3.5" fill="#000" />
+        <circle cx="114" cy="76" r="3.5" fill="#000" />
+      }
+    }
+
+    <!-- Mouth -->
+    @switch (emotion()) {
+      @case ('happy') {
+        <path d="M 83 90 Q 100 100 117 90" stroke="#000" stroke-width="2.5" fill="none" />
+      }
+      @case ('excited') {
+        <path d="M 83 90 Q 100 102 117 90" stroke="#000" stroke-width="2.5" fill="none" />
+        <ellipse cx="100" cy="95" rx="11" ry="7" fill="#fff" opacity="0.7" />
+      }
+      @case ('sad') {
+        <path d="M 83 95 Q 100 88 117 95" stroke="#000" stroke-width="2.5" fill="none" />
+      }
+      @case ('angry') {
+        <line x1="83" y1="92" x2="117" y2="92" stroke="#000" stroke-width="2.5" />
+      }
+      @case ('surprised') {
+        <ellipse cx="100" cy="93" rx="7" ry="9" fill="#000" opacity="0.8" />
+      }
+      @case ('confused') {
+        <path
+          d="M 83 92 Q 90 95 100 92 Q 110 89 117 92"
+          stroke="#000"
+          stroke-width="2.5"
+          fill="none"
+        />
+      }
+      @default {
+        <line x1="85" y1="92" x2="115" y2="92" stroke="#000" stroke-width="2.5" />
+      }
+    }
+  </g>
+
+  <!-- Variant-specific details -->
+  @if (variant() === 'formal') {
+    <!-- Tie -->
+    <polygon points="100,118 94,128 106,128" fill="#c0392b" />
+    <rect x="96" y="128" width="8" height="28" fill="#c0392b" />
+  }
+
+  @if (variant() === 'casual') {
+    <!-- Hoodie strings (white/light gray) -->
+    <line x1="92" y1="122" x2="88" y2="140" stroke="#d0d0d0" stroke-width="2" />
+    <line x1="108" y1="122" x2="112" y2="140" stroke="#d0d0d0" stroke-width="2" />
+    <circle cx="88" cy="141" r="2.5" fill="#d0d0d0" />
+    <circle cx="112" cy="141" r="2.5" fill="#d0d0d0" />
+
+    <!-- Front pocket -->
+    <rect
+      x="75"
+      y="155"
+      width="50"
+      height="28"
+      stroke="#3a3a3a"
+      stroke-width="1.5"
+      fill="none"
+      opacity="0.4"
+      rx="2"
+    />
+  }
+</svg>

@@ -1,6 +1,9 @@
 <div class="character-sprite">
-  <div class="character-placeholder" [attr.data-emotion]="character().emotion">
-    <div class="character-name">{{ character().characterName }}</div>
-    <div class="character-emotion">{{ character().emotion }}</div>
-  </div>
+  <sml-lib-svg-character-renderer
+    [characterId]="character().id"
+    [emotion]="currentEmotion()"
+    [variantId]="variantId()"
+    class="character-renderer"
+  />
+  <div class="character-name">{{ characterName() }}</div>
 </div>

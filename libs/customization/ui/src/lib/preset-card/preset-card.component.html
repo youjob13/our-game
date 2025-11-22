@@ -1,0 +1,32 @@
+<div
+  class="preset-card"
+  [class.selected]="selected()"
+  (click)="onSelect()"
+  role="button"
+  tabindex="0"
+  (keydown.enter)="onSelect()"
+  (keydown.space)="onSelect()"
+>
+  <div class="preset-image">
+    @if (preset().previewImage) {
+      <img [src]="preset().previewImage" [alt]="preset().name" />
+    } @else {
+      <div class="placeholder">
+        <span>{{ preset().name.charAt(0) }}</span>
+      </div>
+    }
+  </div>
+
+  <div class="preset-info">
+    <h3 class="preset-name">{{ preset().name }}</h3>
+    @if (preset().description) {
+      <p class="preset-description">{{ preset().description }}</p>
+    }
+  </div>
+
+  @if (selected()) {
+    <div class="selected-indicator">
+      <span class="checkmark">✓</span>
+    </div>
+  }
+</div>

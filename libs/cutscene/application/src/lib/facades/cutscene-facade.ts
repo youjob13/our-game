@@ -1,5 +1,5 @@
 import { Injectable, signal, computed } from '@angular/core';
-import { Chapter, Cutscene } from '@cutscene/domain';
+import { Chapter, Cutscene, BackgroundConfig, AudioConfig } from '@cutscene/domain';
 
 @Injectable({ providedIn: 'root' })
 export class CutsceneFacade {
@@ -9,6 +9,7 @@ export class CutsceneFacade {
   private currentDialogIndexSignal = signal(0);
   private isPlayingSignal = signal(false);
   private isCompletedSignal = signal(false);
+  private audioElementSignal = signal<HTMLAudioElement | null>(null);
 
   // Public readonly signals
   readonly currentChapter = this.currentChapterSignal.asReadonly();
@@ -22,6 +23,16 @@ export class CutsceneFacade {
     const cutscene = this.currentCutsceneSignal();
     const index = this.currentDialogIndexSignal();
     return cutscene?.getDialogs()[index] ?? null;
+  });
+
+  readonly currentBackground = computed((): BackgroundConfig | null => {
+    const cutscene = this.currentCutsceneSignal();
+    return cutscene?.getBackground() ?? null;
+  });
+
+  readonly currentAudio = computed((): AudioConfig | null => {
+    const cutscene = this.currentCutsceneSignal();
+    return cutscene?.getAudio() ?? null;
   });
 
   readonly hasNextDialog = computed(() => {
@@ -53,6 +64,8 @@ export class CutsceneFacade {
     this.currentDialogIndexSignal.set(0);
     this.isPlayingSignal.set(true);
     this.isCompletedSignal.set(false);
+
+    this.startAudio();
   }
 
   nextDialog(): void {
@@ -75,6 +88,7 @@ export class CutsceneFacade {
   }
 
   reset(): void {
+    this.stopAudio();
     this.currentChapterSignal.set(null);
     this.currentCutsceneSignal.set(null);
     this.currentDialogIndexSignal.set(0);
@@ -83,7 +97,40 @@ export class CutsceneFacade {
   }
 
   private completeCutscene(): void {
+    this.stopAudio();
     this.isPlayingSignal.set(false);
     this.isCompletedSignal.set(true);
+  }
+
+  private startAudio(): void {
+    this.stopAudio();
+
+    const audioConfig = this.currentAudio();
+    if (!audioConfig?.hasMusic()) {
+      return;
+    }
+
+    try {
+      const audio = new Audio(audioConfig.backgroundMusic!);
+      audio.loop = audioConfig.autoLoop;
+      audio.volume = 0.5;
+
+      audio.play().catch((error) => {
+        console.warn('Failed to play background music:', error);
+      });
+
+      this.audioElementSignal.set(audio);
+    } catch (error) {
+      console.error('Failed to load background music:', error);
+    }
+  }
+
+  private stopAudio(): void {
+    const audio = this.audioElementSignal();
+    if (audio) {
+      audio.pause();
+      audio.currentTime = 0;
+      this.audioElementSignal.set(null);
+    }
   }
 }

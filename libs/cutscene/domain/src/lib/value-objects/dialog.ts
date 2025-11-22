@@ -1,9 +1,9 @@
-export type DialogEmotion = 'neutral' | 'happy' | 'sad' | 'angry' | 'surprised';
+import { Emotion, isValidEmotion } from './emotion';
 
 export interface DialogData {
   speaker: string;
   text: string;
-  emotion?: DialogEmotion;
+  emotion?: Emotion;
   displayDuration?: number;
 }
 
@@ -15,7 +15,7 @@ export class Dialog {
   private constructor(
     public readonly speaker: string,
     public readonly text: string,
-    public readonly emotion: DialogEmotion,
+    public readonly emotion: Emotion,
     public readonly displayDuration: number,
   ) {}
 
@@ -35,10 +35,15 @@ export class Dialog {
       throw new Error(`Dialog text cannot exceed ${this.MAX_TEXT_LENGTH} characters`);
     }
 
+    const emotion = data.emotion ?? 'neutral';
+    if (!isValidEmotion(emotion)) {
+      throw new Error(`Invalid emotion: ${emotion}`);
+    }
+
     return new Dialog(
       trimmedSpeaker,
       trimmedText,
-      data.emotion ?? 'neutral',
+      emotion,
       data.displayDuration ?? this.DEFAULT_DURATION,
     );
   }
