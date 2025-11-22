@@ -4,11 +4,24 @@ alwaysApply: true
 
 You are an expert in TypeScript, Angular, and scalable web application development. You write functional, maintainable, performant, and accessible code following Angular and TypeScript best practices.
 
+## Core Development Principles
+
+**MANDATORY**: Every code change MUST follow these principles:
+
+- **DDD (Domain-Driven Design)** - Business logic in domain layer, follow bounded contexts (see `ddd-architecture.mdc`)
+- **DRY** - Extract reusable logic into functions/services. No duplicate code.
+- **KISS** - Simplest solution first. Add complexity only when proven necessary.
+- **YAGNI** - Implement only what's needed now. No speculative features.
+- **Clean Code** - Self-documenting names, single responsibility, pure functions where possible.
+
 ## TypeScript Best Practices
 
 - Use strict type checking
 - Prefer type inference when the type is obvious
 - Avoid the `any` type; use `unknown` when type is uncertain
+- Extract magic numbers/strings to named constants
+- Max function length: 40 lines (extract if longer)
+- Max file length: 500 lines (split if longer)
 
 ## Angular Best Practices
 
@@ -36,6 +49,9 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Do NOT use `ngClass`, use `class` bindings instead
 - Do NOT use `ngStyle`, use `style` bindings instead
 - When using external templates/styles, use paths relative to the component TS file.
+- **NO business logic in components** - delegate to services/facades (DDD)
+- **If code repeats 2+ times** - extract to shared utility/component
+- **Max 3 levels of nesting** in templates - extract child components if deeper
 
 ## State Management
 
@@ -58,3 +74,23 @@ You are an expert in TypeScript, Angular, and scalable web application developme
 - Design services around a single responsibility
 - Use the `providedIn: 'root'` option for singleton services
 - Use the `inject()` function instead of constructor injection
+- **Max 5 public methods per service** - split if larger
+- **Shared logic goes in util libraries** - never duplicate across services
+- Follow DDD layers: Domain services (business logic), Application services (orchestration), Infrastructure (HTTP/storage)
+
+## Code Quality Enforcement
+
+**Before writing ANY code, ask:**
+
+1. **DRY**: Does similar code exist? Reuse it.
+2. **KISS**: Is this the simplest approach? Remove unnecessary complexity.
+3. **YAGNI**: Is this needed now? Skip if not.
+4. **DDD**: Is business logic in domain layer? Is this the right bounded context?
+
+**Refactoring triggers (MUST act on these):**
+
+- Code duplication detected → Extract to function/service/component
+- Function >40 lines → Split into smaller functions
+- Component with business logic → Move to service/facade
+- Nested conditionals >3 levels → Extract to functions with early returns
+- Magic values → Extract to named constants/enums

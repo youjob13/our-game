@@ -1,0 +1,418 @@
+---
+alwaysApply: true
+---
+
+# DDD Architecture Guide
+
+Domain-Driven Design patterns for this Angular + NX monorepo.
+
+## Core Principles
+
+1. **Ubiquitous Language** - Same terminology in code, docs, and conversations
+2. **Bounded Contexts** - Explicit boundaries where domain models apply
+3. **Rich Domain Models** - Entities with behavior, not just data
+4. **Layer Separation** - Domain, Application, Infrastructure, Presentation
+5. **Repository Pattern** - Abstract data access behind interfaces
+
+## Architecture Layers
+
+```
+Presentation (Feature/UI) → Application (Use Cases) → Domain (Business Logic)
+                                                             ↑
+Infrastructure (HTTP, Storage) ──────────────────────────────┘
+```
+
+**Dependency Rules**:
+
+- Feature → Application, UI
+- Application → Domain
+- Infrastructure → Domain (implements interfaces)
+- Domain → Nothing (isolated)
+
+## Bounded Contexts
+
+Organize code by business domains (e.g., Player, GameSession, Inventory, Economy).
+
+Each context has its own library set:
+
+```
+libs/
+├── player/
+│   ├── domain/          # Business logic, entities, interfaces
+│   ├── application/     # Use cases, facades, orchestration
+│   ├── infrastructure/  # HTTP, storage implementations
+│   └── feature/         # Components, routes
+├── game-session/
+│   └── ...
+└── shared/
+    ├── domain/          # Shared entities, value objects
+    └── util/            # Common utilities
+```
+
+## Layer Contents
+
+### Domain Layer (`libs/{context}/domain/`)
+
+**Contains**: Business logic and domain models
+**Dependencies**: Only other domain libraries
+
+Structure:
+
+```
+domain/
+├── entities/          # Objects with identity
+├── value-objects/     # Immutable objects by attributes
+├── aggregates/        # Entity clusters with root
+├── services/          # Business logic operations
+├── repositories/      # Data access interfaces
+├── events/            # Domain events
+└── exceptions/        # Domain-specific errors
+```
+
+### Application Layer (`libs/{context}/application/`)
+
+**Contains**: Use cases and orchestration
+**Dependencies**: Domain layer
+
+Structure:
+
+```
+application/
+├── services/          # Use case orchestration
+├── facades/           # Simplified API with signals
+├── commands/          # Write operations
+├── queries/           # Read operations
+└── dtos/              # Data transfer objects
+```
+
+### Infrastructure Layer (`libs/{context}/infrastructure/`)
+
+**Contains**: Technical implementations
+**Dependencies**: Domain, Application
+
+Structure:
+
+```
+infrastructure/
+├── repositories/      # Repository implementations
+├── http/              # API services
+├── storage/           # Local storage
+├── adapters/          # External system adapters
+└── mappers/           # DTO ↔ Domain transformations
+```
+
+### Presentation Layer (`libs/{context}/feature/`, `libs/{context}/ui/`)
+
+**Contains**: Components and UI
+**Dependencies**: Application (feature), None (ui)
+
+## Tactical Patterns
+
+### 1. Entities
+
+Plain classes with identity, created via factories:
+
+```typescript
+export class Player {
+  private constructor(
+    private readonly id: PlayerId,
+    private name: PlayerName,
+    private level: number,
+  ) {}
+
+  static create(name: PlayerName): Player {
+    return new Player(PlayerId.generate(), name, 1);
+  }
+
+  levelUp(): void {
+    if (this.level >= 100) throw new Error('Max level');
+    this.level++;
+  }
+}
+```
+
+### 2. Value Objects
+
+Immutable objects with validation:
+
+```typescript
+export class PlayerName {
+  private static readonly MIN_LENGTH = 3;
+  private static readonly MAX_LENGTH = 20;
+
+  private constructor(private readonly value: string) {}
+
+  static create(name: string): PlayerName {
+    const trimmed = name.trim();
+    if (trimmed.length < this.MIN_LENGTH || trimmed.length > this.MAX_LENGTH) {
+      throw new Error('Invalid name length');
+    }
+    return new PlayerName(trimmed);
+  }
+
+  getValue(): string {
+    return this.value;
+  }
+
+  equals(other: PlayerName): boolean {
+    return this.value === other.value;
+  }
+}
+```
+
+### 3. Aggregates
+
+Entity clusters with a root enforcing invariants:
+
+```typescript
+export class PlayerProfile {
+  private constructor(
+    private readonly player: Player,
+    private readonly inventory: Item[],
+  ) {}
+
+  static create(name: PlayerName): PlayerProfile {
+    return new PlayerProfile(Player.create(name), []);
+  }
+
+  addItem(item: Item): void {
+    if (this.inventory.length >= 100) throw new Error('Inventory full');
+    if (this.player.level < item.requiredLevel) throw new Error('Level too low');
+    this.inventory.push(item);
+  }
+}
+```
+
+### 4. Repository Interfaces
+
+Abstract classes in domain, implemented in infrastructure:
+
+```typescript
+// Domain layer
+@Injectable()
+export abstract class PlayerRepository {
+  abstract save(player: Player): Promise<void>;
+  abstract findById(id: PlayerId): Promise<Player | null>;
+  abstract findAll(): Promise<Player[]>;
+}
+
+// Infrastructure layer
+@Injectable({ providedIn: 'root' })
+export class HttpPlayerRepository extends PlayerRepository {
+  private readonly http = inject(HttpClient);
+
+  async save(player: Player): Promise<void> {
+    await firstValueFrom(this.http.post('/api/players', this.toDto(player)));
+  }
+
+  async findById(id: PlayerId): Promise<Player | null> {
+    try {
+      const dto = await firstValueFrom(this.http.get(`/api/players/${id.value}`));
+      return this.toDomain(dto);
+    } catch {
+      return null;
+    }
+  }
+}
+```
+
+### 5. Domain Services
+
+Injectable services for business rules that don't fit in entities:
+
+```typescript
+@Injectable({ providedIn: 'root' })
+export class PlayerValidationService {
+  private static readonly RESERVED_NAMES = new Set(['admin', 'system']);
+
+  isNameAvailable(name: PlayerName, existing: Player[]): boolean {
+    if (RESERVED_NAMES.has(name.getValue().toLowerCase())) return false;
+    return !existing.some((p) => p.name.equals(name));
+  }
+}
+```
+
+### 6. Application Services
+
+Orchestrate use cases:
+
+```typescript
+@Injectable({ providedIn: 'root' })
+export class PlayerManagementService {
+  private readonly repository = inject(PlayerRepository);
+  private readonly validator = inject(PlayerValidationService);
+
+  async createPlayer(name: string): Promise<PlayerDto> {
+    const playerName = PlayerName.create(name);
+    const existing = await this.repository.findAll();
+
+    if (!this.validator.isNameAvailable(playerName, existing)) {
+      throw new Error('Name unavailable');
+    }
+
+    const player = Player.create(playerName);
+    await this.repository.save(player);
+    return this.toDto(player);
+  }
+}
+```
+
+### 7. Facades
+
+Simplify access with signal-based state:
+
+```typescript
+@Injectable({ providedIn: 'root' })
+export class PlayerFacade {
+  private readonly service = inject(PlayerManagementService);
+
+  private readonly playersSignal = signal<PlayerDto[]>([]);
+  private readonly loadingSignal = signal(false);
+
+  readonly players = this.playersSignal.asReadonly();
+  readonly loading = this.loadingSignal.asReadonly();
+
+  async loadPlayers(): Promise<void> {
+    this.loadingSignal.set(true);
+    try {
+      const players = await this.service.getAllPlayers();
+      this.playersSignal.set(players);
+    } finally {
+      this.loadingSignal.set(false);
+    }
+  }
+}
+```
+
+## NX Library Generation
+
+```bash
+# Domain library (TypeScript only)
+nx g @nx/js:library --name=domain --directory=libs/player/domain
+
+# Application, Infrastructure, Feature libraries
+nx g @nx/angular:library --name=application --directory=libs/player/application
+nx g @nx/angular:library --name=infrastructure --directory=libs/player/infrastructure
+nx g @nx/angular:library --name=feature --directory=libs/player/feature
+
+# UI library (presentational components)
+nx g @nx/angular:library --name=ui --directory=libs/player/ui
+```
+
+## Dependency Injection Rules
+
+- **Entities/Value Objects**: Plain classes, created via static factories
+- **Domain Services**: `@Injectable({ providedIn: 'root' })`
+- **Repository Interfaces**: `@Injectable()` abstract classes (no `providedIn`)
+- **Application Services**: `@Injectable({ providedIn: 'root' })`
+- **Infrastructure**: `@Injectable({ providedIn: 'root' })`
+- **Facades**: `@Injectable({ providedIn: 'root' })`
+
+Provider configuration:
+
+```typescript
+// apps/our-game/src/app/app.config.ts
+export const appConfig: ApplicationConfig = {
+  providers: [provideHttpClient(), { provide: PlayerRepository, useClass: HttpPlayerRepository }],
+};
+```
+
+## Anti-Corruption Layer
+
+Protect domain from external systems:
+
+```typescript
+@Injectable({ providedIn: 'root' })
+export class LegacyApiAdapter {
+  toDomain(legacy: LegacyPlayerResponse): Player {
+    return Player.fromPersistence({
+      id: legacy.player_id,
+      name: legacy.player_name,
+      stats: { level: legacy.lvl, experience: legacy.exp },
+      createdAt: new Date(legacy.created),
+    });
+  }
+}
+```
+
+## Testing Strategy
+
+**Domain**: Pure unit tests, no mocks
+
+```typescript
+it('should level up player', () => {
+  const player = Player.create(PlayerName.create('Test'));
+  player.levelUp();
+  expect(player.level).toBe(2);
+});
+```
+
+**Application**: Mock repositories
+
+```typescript
+it('should create player', async () => {
+  mockRepo.findAll.and.returnValue(Promise.resolve([]));
+  await service.createPlayer('Test');
+  expect(mockRepo.save).toHaveBeenCalled();
+});
+```
+
+**Feature**: TestBed with mocked facades
+
+```typescript
+it('should display players', () => {
+  mockFacade.players = signal([{ id: '1', name: 'Player1' }]);
+  fixture.detectChanges();
+  expect(fixture.nativeElement.textContent).toContain('Player1');
+});
+```
+
+## Common Pitfalls
+
+❌ **Anemic Domain** - Entities with only getters/setters
+❌ **Logic in Wrong Layer** - Business rules in application services
+❌ **Breaking Encapsulation** - Public mutable properties
+❌ **Infrastructure in Domain** - HttpClient in entities
+❌ **Technical Names** - Use domain language, not technical terms
+❌ **Over-engineering** - Start simple, add complexity when needed
+
+## Quick Reference
+
+**What goes in Domain?**
+
+- Entities, Value Objects, Aggregates (plain classes)
+- Domain Services (injectable)
+- Repository interfaces (abstract)
+- Business logic and rules
+
+**What goes in Application?**
+
+- Use case orchestration (services)
+- Facades with signals
+- Commands, Queries, DTOs
+
+**What goes in Infrastructure?**
+
+- Repository implementations
+- HTTP services
+- Storage adapters
+- External API integration
+
+**What goes in Feature/UI?**
+
+- Components
+- Routes
+- View logic only
+
+## Getting Started
+
+1. Identify bounded contexts for your game
+2. Start with one context (e.g., Player)
+3. Create domain models (entities, VOs)
+4. Define repository interfaces
+5. Implement in infrastructure
+6. Create application services
+7. Build facade for UI
+8. Create feature components
+
+Keep it simple initially. Add patterns as complexity grows.

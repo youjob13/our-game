@@ -1,0 +1,167 @@
+---
+alwaysApply: true
+---
+
+# Tech Stack & Project Context
+
+This project uses a modern Angular stack within an NX monorepo architecture. This rule defines the technologies, their versions, and how they work together.
+
+## Core Technologies
+
+### Angular
+
+- **Modern standalone components** - No NgModules, all components are standalone by default
+- **Signals-based reactivity** - Primary state management using signals, computed(), and effect()
+- **Zoneless change detection** - Modern, performance-focused approach
+- **TypeScript** - Leveraging strict type safety features
+
+### RxJS
+
+- **Reactive programming** - For asynchronous operations, HTTP requests, and event streams
+- **Signal interoperability** - Use `toSignal()` and `toObservable()` for seamless integration
+- **Operator-based transformations** - Leverage operators like `map`, `switchMap`, `filter`, `catchError`
+- **Prefer signals over BehaviorSubjects** - Use signals for state, RxJS for streams and async operations
+
+### NX (Monorepo Tooling)
+
+- **Workspace structure** - Applications in `apps/`, libraries in `libs/`
+- **Task execution** - Use `nx` commands instead of `ng` directly (e.g., `nx serve`, `nx build`, `nx test`)
+- **Project configuration** - Each project has a `project.json` for build/test/lint configuration
+- **Code organization** - Use NX's modular architecture to create shared libraries
+- **Affected commands** - Leverage `nx affected` to run tasks only on changed code
+
+## Architecture Principles
+
+### Monorepo Structure
+
+```
+our-game/
+├── apps/              # Applications
+│   └── our-game/      # Main Angular app
+├── libs/              # Shared libraries (feature, ui, data-access, util)
+├── .cursor/rules/     # AI assistant rules
+└── nx.json           # NX workspace configuration
+```
+
+### Library Organization (NX Best Practices)
+
+When creating new libraries, follow NX naming conventions:
+
+- **Feature libraries** - `libs/feature-name` (smart components, routing)
+- **UI libraries** - `libs/ui-name` (presentational components)
+- **Data access libraries** - `libs/data-access-name` (services, state, API calls)
+- **Utility libraries** - `libs/util-name` (helpers, pipes, utilities)
+
+### State Management Strategy
+
+1. **Local component state** - Use signals with `signal()`, `computed()`, `effect()`
+2. **Service-based state** - Injectable services with signals for shared state
+3. **Async operations** - RxJS observables converted to signals with `toSignal()`
+4. **Avoid over-engineering** - Don't use NgRx/state management libraries unless explicitly needed
+
+## Angular + RxJS Integration Patterns
+
+### HTTP Requests
+
+```typescript
+// Service with signal-based state
+export class DataService {
+  private http = inject(HttpClient);
+
+  // Convert Observable to Signal
+  data = toSignal(this.http.get('/api/data'), { initialValue: [] });
+
+  // Or use resource() for async state
+  userResource = resource({
+    loader: () => this.http.get('/api/user'),
+  });
+}
+```
+
+### Event Streams
+
+```typescript
+// Component with signal outputs and RxJS
+export class MyComponent {
+  private destroyRef = inject(DestroyRef);
+
+  searchTerm = signal('');
+
+  ngOnInit() {
+    // Convert signal to observable for RxJS operators
+    toObservable(this.searchTerm)
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap((term) => this.searchService.search(term)),
+        takeUntilDestroyed(this.destroyRef),
+      )
+      .subscribe((results) => this.searchResults.set(results));
+  }
+}
+```
+
+## NX Commands
+
+### Development
+
+- `nx serve our-game` - Start dev server
+- `nx build our-game` - Build for production
+- `nx test our-game` - Run tests
+- `nx lint our-game` - Lint code
+
+### Workspace-wide
+
+- `nx run-many -t build` - Build all projects
+- `nx run-many -t test` - Test all projects
+- `nx affected:test` - Test only affected projects
+- `nx graph` - View dependency graph
+
+### Library Generation
+
+- `nx g @nx/angular:library feature-auth --directory=libs/feature-auth` - Generate feature library
+- `nx g @nx/angular:library ui-button --directory=libs/ui-button` - Generate UI library
+
+## Code Quality Tools
+
+- **ESLint** - Linting with Angular ESLint, Prettier integration
+- **Prettier** - Code formatting (printWidth: 100, singleQuote: true)
+- **Husky** - Git hooks for pre-commit checks
+- **Jasmine + Karma** - Unit testing framework
+- **TypeScript strict mode** - Maximum type safety
+
+## Decision Guidelines
+
+### When to use Signals vs RxJS
+
+- **Signals**: Component state, computed values, simple async operations
+- **RxJS**: Complex async flows, HTTP requests, event streams with operators, multiple subscriptions
+
+### When to create a library
+
+- Code is used by 2+ applications/libraries
+- Code has a clear, single responsibility
+- Code should be independently testable
+- Feature can be developed/maintained separately
+
+### Performance Considerations
+
+- Use `ChangeDetectionStrategy.OnPush` on all components
+- Leverage NX's computation caching
+- Use lazy loading for feature routes
+- Optimize images with `NgOptimizedImage`
+
+## Project-Specific Context
+
+- **Application**: Game-related web application (`our-game`)
+- **Monorepo**: Single app currently, but structured for future scaling
+- **Build System**: Angular build system (esbuild) with NX orchestration
+- **Version Control**: Git with Husky pre-commit hooks
+
+## When Helping with Code
+
+1. **Always consider NX structure** - Suggest proper library organization
+2. **Prefer signals over RxJS** - Unless async complexity requires RxJS operators
+3. **Use standalone components** - Never suggest NgModules
+4. **Follow modern Angular patterns** - Use latest APIs and best practices
+5. **Leverage NX commands** - Suggest appropriate NX CLI commands for generation/execution
