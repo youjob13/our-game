@@ -1,0 +1,208 @@
+.guitar-container {
+  position: fixed;
+  bottom: -30px;
+  right: 20px;
+  width: 220px;
+  height: 380px;
+  z-index: 1;
+  pointer-events: none;
+  transform: rotate(-15deg);
+}
+
+.guitar {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(4px 6px 12px rgba(0, 0, 0, 0.6));
+  animation: guitar-float 6s ease-in-out infinite;
+}
+
+.strings {
+  animation: string-vibrate 0.5s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.string {
+  animation: individual-vibrate 0.3s ease-in-out infinite;
+}
+
+.string:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.string:nth-child(2) {
+  animation-delay: 0.1s;
+}
+
+.string:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.string:nth-child(4) {
+  animation-delay: 0.3s;
+}
+
+.string:nth-child(5) {
+  animation-delay: 0.4s;
+}
+
+.notes-container {
+  position: absolute;
+  top: 35%;
+  left: 55%;
+  width: 120px;
+  height: 250px;
+  transform: translate(-50%, -50%);
+  overflow: visible;
+}
+
+.music-note {
+  position: absolute;
+  left: 50%;
+  top: 65%;
+  font-size: 2.2rem;
+  color: #ffd700;
+  text-shadow:
+    0 0 15px rgba(255, 215, 0, 0.9),
+    0 0 25px rgba(255, 215, 0, 0.7),
+    2px 2px 4px rgba(0, 0, 0, 0.8);
+  animation: float-note linear infinite;
+  opacity: 0;
+  font-weight: bold;
+
+  &:nth-child(2n) {
+    color: #00d9ff;
+    text-shadow:
+      0 0 15px rgba(0, 217, 255, 0.9),
+      0 0 25px rgba(0, 217, 255, 0.7),
+      2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  &:nth-child(3n) {
+    color: #ff006e;
+    text-shadow:
+      0 0 15px rgba(255, 0, 110, 0.9),
+      0 0 25px rgba(255, 0, 110, 0.7),
+      2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  &:nth-child(4n) {
+    color: #39ff14;
+    text-shadow:
+      0 0 15px rgba(57, 255, 20, 0.9),
+      0 0 25px rgba(57, 255, 20, 0.7),
+      2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  &:nth-child(5n) {
+    color: #b026ff;
+    text-shadow:
+      0 0 15px rgba(176, 38, 255, 0.9),
+      0 0 25px rgba(176, 38, 255, 0.7),
+      2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+
+  &:nth-child(7n) {
+    color: #ff6d00;
+    text-shadow:
+      0 0 15px rgba(255, 109, 0, 0.9),
+      0 0 25px rgba(255, 109, 0, 0.7),
+      2px 2px 4px rgba(0, 0, 0, 0.8);
+  }
+}
+
+@keyframes guitar-float {
+  0%,
+  100% {
+    transform: rotate(-15deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(-15deg) translateY(-15px);
+  }
+}
+
+@keyframes string-vibrate {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(1px);
+  }
+}
+
+@keyframes individual-vibrate {
+  0%,
+  100% {
+    stroke-width: 1;
+    opacity: 0.8;
+  }
+  50% {
+    stroke-width: 1.5;
+    opacity: 1;
+  }
+}
+
+@keyframes float-note {
+  0% {
+    transform: translate(-50%, 0) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+    transform: translate(-50%, -30px) rotate(45deg) scale(1);
+  }
+  85% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -250px) rotate(360deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+// Tablet adjustments
+@media (max-width: 768px) {
+  .guitar-container {
+    bottom: -20px;
+    right: 10px;
+    width: 180px;
+    height: 310px;
+  }
+
+  .music-note {
+    font-size: 1.8rem;
+  }
+}
+
+// Mobile adjustments
+@media (max-width: 640px) {
+  .guitar-container {
+    bottom: -15px;
+    right: 5px;
+    width: 140px;
+    height: 240px;
+  }
+
+  .music-note {
+    font-size: 1.4rem;
+  }
+
+  .notes-container {
+    width: 100px;
+    height: 200px;
+  }
+}
+
+// Very small screens
+@media (max-width: 480px) {
+  .guitar-container {
+    bottom: -10px;
+    right: 0;
+    width: 110px;
+    height: 190px;
+  }
+
+  .music-note {
+    font-size: 1.2rem;
+  }
+}

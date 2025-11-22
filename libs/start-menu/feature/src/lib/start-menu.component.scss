@@ -11,52 +11,64 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 3rem;
+  gap: 2.5rem;
   width: 100%;
   max-width: 500px;
   animation: fadeIn 0.8s ease-out;
+  position: relative;
+  z-index: 10;
 }
 
 .game-title {
   font-family: 'Press Start 2P', cursive;
-  font-size: clamp(1.2rem, 4vw, 2rem);
+  font-size: clamp(1.3rem, 4.5vw, 2.2rem);
   color: #ffffff;
   text-align: center;
-  text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 215, 0, 0.6);
-  line-height: 1.5;
-  padding: 1.5rem;
-  background: rgba(0, 0, 0, 0.3);
-  border: 4px solid #ffd700;
-  border-radius: 8px;
-  box-shadow: 0 0 30px rgba(255, 215, 0, 0.4), inset 0 0 20px rgba(255, 215, 0, 0.1);
+  text-shadow:
+    3px 3px 0px rgba(26, 35, 126, 0.8),
+    0 0 25px rgba(255, 213, 79, 0.6),
+    0 0 40px rgba(94, 146, 243, 0.4);
+  line-height: 1.6;
+  padding: 2rem 1.5rem;
+  background: rgba(26, 35, 126, 0.5);
+  border: 4px solid #ffd54f;
+  border-radius: 12px;
+  box-shadow:
+    0 0 40px rgba(255, 213, 79, 0.4),
+    inset 0 0 30px rgba(128, 203, 196, 0.15),
+    0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  letter-spacing: 0.5px;
 }
 
 .button-group {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.2rem;
   width: 100%;
 }
 
 .menu-button {
-  font-family: 'VT323', monospace;
-  font-size: clamp(1.5rem, 5vw, 2rem);
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #00d9ff 0%, #b026ff 100%);
+  font-family: 'Exo 2', 'Orbitron', sans-serif;
+  font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+  font-weight: 700;
+  padding: 1.1rem 2rem;
+  background: linear-gradient(135deg, #1e88e5 0%, #00d4ff 100%);
   color: #ffffff;
-  border: 4px solid #ffffff;
-  border-radius: 8px;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 0.8);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow:
+    0 4px 0 rgba(26, 35, 126, 0.8),
+    0 8px 20px rgba(0, 0, 0, 0.3);
   text-transform: uppercase;
-  letter-spacing: 2px;
-  font-weight: bold;
+  letter-spacing: 1.5px;
   position: relative;
   overflow: hidden;
   touch-action: manipulation;
   user-select: none;
-  min-height: 60px;
+  min-height: 64px;
 
   &::before {
     content: '';
@@ -65,39 +77,62 @@
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-    transition: left 0.5s ease;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.25), transparent);
+    transition: left 0.6s ease;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 10px;
+    padding: 3px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), transparent);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.25s ease;
   }
 
   &:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.8);
-    border-color: #ffd700;
+    transform: translateY(-3px);
+    box-shadow:
+      0 6px 0 rgba(26, 35, 126, 0.8),
+      0 12px 30px rgba(255, 213, 79, 0.5);
+    border-color: rgba(255, 213, 79, 1);
 
     &::before {
       left: 100%;
     }
+
+    &::after {
+      opacity: 1;
+    }
   }
 
   &:active {
-    transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.8);
+    transform: translateY(2px);
+    box-shadow:
+      0 2px 0 rgba(26, 35, 126, 0.8),
+      0 4px 10px rgba(0, 0, 0, 0.3);
   }
 
   &:nth-child(1) {
-    background: linear-gradient(135deg, #ff006e 0%, #ff6d00 100%);
+    background: linear-gradient(135deg, #3949ab 0%, #5e92f3 50%, #80cbc4 100%);
   }
 
   &:nth-child(2) {
-    background: linear-gradient(135deg, #00d9ff 0%, #39ff14 100%);
+    background: linear-gradient(135deg, #5e92f3 0%, #80cbc4 50%, #ffab91 100%);
   }
 
   &:nth-child(3) {
-    background: linear-gradient(135deg, #b026ff 0%, #ff006e 100%);
+    background: linear-gradient(135deg, #80cbc4 0%, #ffab91 50%, #ffd54f 100%);
   }
 
   &:nth-child(4) {
-    background: linear-gradient(135deg, #ff6d00 0%, #ffd700 100%);
+    background: linear-gradient(135deg, #ffab91 0%, #ffd54f 50%, #5e92f3 100%);
   }
 }
 
@@ -123,8 +158,9 @@
   }
 
   .game-title {
-    padding: 1rem;
-    font-size: 1rem;
+    padding: 1.2rem 1rem;
+    font-size: 1.1rem;
+    border-width: 3px;
   }
 
   .button-group {
@@ -132,9 +168,10 @@
   }
 
   .menu-button {
-    padding: 0.875rem 1.5rem;
-    font-size: 1.5rem;
-    min-height: 56px;
+    padding: 1rem 1.5rem;
+    font-size: 1.3rem;
+    min-height: 58px;
+    border-width: 2.5px;
   }
 }
 
@@ -142,4 +179,3 @@
 * {
   -webkit-tap-highlight-color: transparent;
 }
-

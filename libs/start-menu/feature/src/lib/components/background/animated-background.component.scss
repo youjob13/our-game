@@ -14,11 +14,12 @@
   height: 100%;
   background: linear-gradient(
     135deg,
-    #ff006e 0%,
-    #b026ff 25%,
-    #00d9ff 50%,
-    #ff6d00 75%,
-    #39ff14 100%
+    #1a237e 0%,
+    #3949ab 20%,
+    #5e92f3 40%,
+    #80cbc4 60%,
+    #ffab91 80%,
+    #ffd54f 100%
   );
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
@@ -36,29 +37,36 @@
   height: 4px;
   background: #ffffff;
   border-radius: 50%;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.9);
   animation: float linear infinite;
-  opacity: 0.8;
+  opacity: 0.85;
 
   &:nth-child(3n) {
     width: 6px;
     height: 6px;
-    box-shadow: 0 0 15px rgba(255, 215, 0, 0.9);
-    background: #ffd700;
+    box-shadow: 0 0 15px rgba(255, 213, 79, 0.8);
+    background: #ffd54f;
   }
 
   &:nth-child(5n) {
     width: 3px;
     height: 3px;
-    box-shadow: 0 0 12px rgba(57, 255, 20, 0.8);
-    background: #39ff14;
+    box-shadow: 0 0 12px rgba(128, 203, 196, 0.8);
+    background: #80cbc4;
   }
 
   &:nth-child(7n) {
     width: 5px;
     height: 5px;
-    box-shadow: 0 0 14px rgba(0, 217, 255, 0.9);
-    background: #00d9ff;
+    box-shadow: 0 0 14px rgba(94, 146, 243, 0.8);
+    background: #5e92f3;
+  }
+
+  &:nth-child(11n) {
+    width: 4px;
+    height: 4px;
+    box-shadow: 0 0 13px rgba(255, 171, 145, 0.8);
+    background: #ffab91;
   }
 }
 

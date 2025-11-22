@@ -3,18 +3,18 @@
 
 /* Tailwind v4 Theme Configuration */
 @theme {
-  /* Custom colors */
-  --color-pixel-blue: #00d9ff;
-  --color-pixel-pink: #ff006e;
-  --color-pixel-lime: #39ff14;
-  --color-pixel-orange: #ff6d00;
-  --color-pixel-purple: #b026ff;
-  --color-pixel-yellow: #ffd700;
+  /* Harmonious Warm-Cool Palette */
+  --color-deep-indigo: #1a237e;
+  --color-indigo: #3949ab;
+  --color-sky-blue: #5e92f3;
+  --color-teal: #80cbc4;
+  --color-warm-peach: #ffab91;
+  --color-warm-gold: #ffd54f;
 
   /* Custom fonts */
   --font-family-pixel: 'Press Start 2P', cursive;
+  --font-family-modern: 'Exo 2', 'Orbitron', sans-serif;
   --font-family-pixel-smooth: 'VT323', monospace;
-
   /* Custom shadows */
   --shadow-pixel: 4px 4px 0px 0px rgba(0, 0, 0, 0.8);
   --shadow-pixel-hover: 6px 6px 0px 0px rgba(0, 0, 0, 0.8);
@@ -47,8 +47,8 @@
   }
 }
 
-/* Import pixel fonts from Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap');
+/* Import fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Exo+2:wght@400;600;700;800&family=Orbitron:wght@400;500;700;900&display=swap');
 
 /* Global styles */
 * {

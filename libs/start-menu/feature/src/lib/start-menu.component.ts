@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { AnimatedBackgroundComponent } from './animated-background.component';
+import { AnimatedBackgroundComponent } from './components/background/animated-background.component';
+import { AnimatedGuitarComponent } from './components/guitar/animated-guitar.component';
 
 interface MenuButton {
   label: string;
@@ -12,7 +13,7 @@ interface MenuButton {
   templateUrl: './start-menu.component.html',
   styleUrl: './start-menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AnimatedBackgroundComponent],
+  imports: [AnimatedBackgroundComponent, AnimatedGuitarComponent],
 })
 export class StartMenuComponent {
   protected readonly gameTitle = 'Игра-архив воспоминаний';
