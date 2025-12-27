@@ -7,7 +7,12 @@
 
     <div class="button-group">
       @for (button of menuButtons; track button.action) {
-        <button class="menu-button" type="button" (click)="onButtonClick(button.action)">
+        <button
+          [disabled]="button.disabled"
+          class="menu-button"
+          type="button"
+          (click)="onButtonClick(button.action)"
+        >
           {{ button.label }}
         </button>
       }

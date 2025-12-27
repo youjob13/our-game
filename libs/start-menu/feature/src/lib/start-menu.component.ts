@@ -7,6 +7,7 @@ import { AnimatedGuitarComponent } from './components/guitar/animated-guitar.com
 interface MenuButton {
   label: string;
   action: string;
+  disabled: boolean;
 }
 
 @Component({
@@ -22,9 +23,9 @@ export class StartMenuComponent {
   protected readonly gameTitle = 'Архив воспоминаний';
 
   protected readonly menuButtons: MenuButton[] = [
-    { label: 'Story Mode', action: 'story' },
-    { label: 'Chapters', action: 'chapters' },
-    { label: 'Customization', action: 'customization' },
+    { label: 'Режим Истории', disabled: false, action: 'story' },
+    { label: 'Главы', disabled: true, action: 'chapters' },
+    { label: 'Настройки', disabled: true, action: 'customization' },
   ];
 
   protected onButtonClick(action: string): void {

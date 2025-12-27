@@ -96,6 +96,19 @@
     transition: opacity 0.25s ease;
   }
 
+  &:disabled {
+    background: #555555;
+    border-color: #777777;
+    box-shadow: none;
+    color: #cccccc;
+    cursor: not-allowed;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+
   &:hover {
     transform: translateY(-3px);
     box-shadow:
