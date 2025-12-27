@@ -464,26 +464,26 @@ export class FlappyBirdComponent implements AfterViewInit, OnDestroy {
 
   private loadAssets(): void {
     const assetsToLoad = [
-      { obj: this.gnd.sprite, src: 'our-game/flappy-bird/img/ground.png' },
+      { obj: this.gnd.sprite, src: 'flappy-bird/img/ground.png' },
       { obj: this.bg.sprite, src: 'flappy-bird/img/BG.png' },
-      { obj: this.pipe.top.sprite, src: 'our-game/flappy-bird/img/toppipe.png' },
-      { obj: this.pipe.bot.sprite, src: 'our-game/flappy-bird/img/botpipe.png' },
-      { obj: this.UI.gameOver.sprite, src: 'our-game/flappy-bird/img/go.png' },
-      { obj: this.UI.getReady.sprite, src: 'our-game/flappy-bird/img/getready.png' },
-      { obj: this.UI.tap[0].sprite, src: 'our-game/flappy-bird/img/tap/t0.png' },
-      { obj: this.UI.tap[1].sprite, src: 'our-game/flappy-bird/img/tap/t1.png' },
-      { obj: this.bird.animations[0].sprite, src: 'our-game/flappy-bird/img/bird/b0.png' },
-      { obj: this.bird.animations[1].sprite, src: 'our-game/flappy-bird/img/bird/b1.png' },
-      { obj: this.bird.animations[2].sprite, src: 'our-game/flappy-bird/img/bird/b2.png' },
-      { obj: this.bird.animations[3].sprite, src: 'our-game/flappy-bird/img/bird/b0.png' },
+      { obj: this.pipe.top.sprite, src: 'flappy-bird/img/toppipe.png' },
+      { obj: this.pipe.bot.sprite, src: 'flappy-bird/img/botpipe.png' },
+      { obj: this.UI.gameOver.sprite, src: 'flappy-bird/img/go.png' },
+      { obj: this.UI.getReady.sprite, src: 'flappy-bird/img/getready.png' },
+      { obj: this.UI.tap[0].sprite, src: 'flappy-bird/img/tap/t0.png' },
+      { obj: this.UI.tap[1].sprite, src: 'flappy-bird/img/tap/t1.png' },
+      { obj: this.bird.animations[0].sprite, src: 'flappy-bird/img/bird/b0.png' },
+      { obj: this.bird.animations[1].sprite, src: 'flappy-bird/img/bird/b1.png' },
+      { obj: this.bird.animations[2].sprite, src: 'flappy-bird/img/bird/b2.png' },
+      { obj: this.bird.animations[3].sprite, src: 'flappy-bird/img/bird/b0.png' },
     ];
 
     const audioAssets = [
-      { obj: this.SFX.start, src: 'our-game/flappy-bird/sfx/start.wav' },
-      { obj: this.SFX.flap, src: 'our-game/flappy-bird/sfx/flap.wav' },
-      { obj: this.SFX.score, src: 'our-game/flappy-bird/sfx/score.wav' },
-      { obj: this.SFX.hit, src: 'our-game/flappy-bird/sfx/hit.wav' },
-      { obj: this.SFX.die, src: 'our-game/flappy-bird/sfx/die.wav' },
+      { obj: this.SFX.start, src: 'flappy-bird/sfx/start.wav' },
+      { obj: this.SFX.flap, src: 'flappy-bird/sfx/flap.wav' },
+      { obj: this.SFX.score, src: 'flappy-bird/sfx/score.wav' },
+      { obj: this.SFX.hit, src: 'flappy-bird/sfx/hit.wav' },
+      { obj: this.SFX.die, src: 'flappy-bird/sfx/die.wav' },
     ];
 
     let loadedCount = 0;
