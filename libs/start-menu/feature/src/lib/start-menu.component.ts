@@ -21,7 +21,7 @@ export class StartMenuComponent {
   private readonly router = inject(Router);
 
   protected readonly gameDescription =
-    'Рад, что судьба послала мне такого ангелочка. \n Пусть наши воспоминания останутся не только в сердце, но и в коде';
+    'Я очень рад, что на моем пути мне встретился такой ангелочек. \n Пусть наши воспоминания останутся не только в сердце, но и в коде';
 
   protected readonly gameTitle = 'Архив воспоминаний';
 
