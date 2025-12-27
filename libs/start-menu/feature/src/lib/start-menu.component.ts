@@ -27,8 +27,8 @@ export class StartMenuComponent {
 
   protected readonly menuButtons: MenuButton[] = [
     { label: 'Режим Истории', disabled: false, action: 'story' },
-    { label: 'Главы', disabled: true, action: 'chapters' },
-    { label: 'Настройки', disabled: true, action: 'customization' },
+    // { label: 'Главы', disabled: true, action: 'chapters' },
+    // { label: 'Настройки', disabled: true, action: 'customization' },
   ];
 
   protected onButtonClick(action: string): void {
