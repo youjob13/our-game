@@ -1,77 +1,68 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+
+import { FlappyBirdComponent } from './flappy-bird/flappy-bird.component';
 
 @Component({
   selector: 'sml-gameplay-page',
   template: `
-    <div class="gameplay-placeholder">
-      <div class="content">
-        <h1>Геймплей</h1>
-        <p>Здесь будет основная игра</p>
-        <p class="chapter-info">Глава 1: Начало путешествия</p>
-        <a routerLink="/" class="back-button">Вернуться в меню</a>
-      </div>
+    <div class="gameplay-container">
+      <sml-flappy-bird #flappyBird />
+      @if (flappyBird.isGameOver()) {
+        <div class="back-button-container">
+          <a routerLink="/" class="back-button">Вернуться в меню</a>
+        </div>
+      }
     </div>
   `,
   styles: [
     `
-      .gameplay-placeholder {
+      .gameplay-container {
+        position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        background: #30c0df;
         display: flex;
         align-items: center;
         justify-content: center;
-        min-height: 100vh;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: #fff;
-        text-align: center;
       }
 
-      .content {
-        padding: 48px;
-        background: rgba(0, 0, 0, 0.3);
-        border-radius: 16px;
-        backdrop-filter: blur(10px);
-      }
-
-      h1 {
-        font-size: 48px;
-        margin: 0 0 16px;
-        text-transform: uppercase;
-        letter-spacing: 3px;
-      }
-
-      p {
-        font-size: 20px;
-        margin: 0 0 16px;
-        opacity: 0.9;
-      }
-
-      .chapter-info {
-        font-size: 16px;
-        font-style: italic;
-        margin-bottom: 32px;
-        opacity: 0.7;
+      .back-button-container {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
       }
 
       .back-button {
         display: inline-block;
-        padding: 16px 32px;
-        background: rgba(255, 255, 255, 0.2);
-        border: 2px solid rgba(255, 255, 255, 0.3);
+        padding: 12px 24px;
+        background: rgba(255, 255, 255, 0.9);
+        border: 2px solid rgba(0, 0, 0, 0.3);
         border-radius: 8px;
-        color: #fff;
+        color: #333;
         text-decoration: none;
         font-size: 16px;
+        font-weight: 500;
         transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 
         &:hover {
-          background: rgba(255, 255, 255, 0.3);
-          border-color: rgba(255, 255, 255, 0.5);
+          background: rgba(255, 255, 255, 1);
+          border-color: rgba(0, 0, 0, 0.5);
           transform: translateY(-2px);
+          box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        &:active {
+          transform: translateY(0);
         }
       }
     `,
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterLink],
+  imports: [FlappyBirdComponent, RouterLink],
 })
 export class GameplayPageComponent {}
