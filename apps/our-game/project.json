@@ -20,6 +20,11 @@
           {
             "glob": "**/*",
             "input": "apps/our-game/public"
+          },
+          {
+            "glob": "favicon.ico",
+            "input": "public",
+            "output": "."
           }
         ],
         "styles": ["apps/our-game/src/styles.scss"],
