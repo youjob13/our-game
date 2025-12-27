@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, isDevMode } from '@angular/core';
 import { Chapter, ChapterData } from '@cutscene/domain';
 import { firstValueFrom } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class CutsceneRepository {
   private readonly http = inject(HttpClient);
-  private readonly assetsPath = 'cutscenes';
+  private readonly assetsPath = isDevMode() ? `our-game/browser/cutscenes` : 'cutscenes';
 
   async getChapterById(chapterId: string): Promise<Chapter> {
     const url = `${this.assetsPath}/${chapterId}.json`;

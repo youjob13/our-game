@@ -5,6 +5,7 @@ import {
   DestroyRef,
   ElementRef,
   inject,
+  isDevMode,
   OnDestroy,
   signal,
   ViewChild,
@@ -106,6 +107,7 @@ interface UI {
 export class FlappyBirdComponent implements AfterViewInit, OnDestroy {
   @ViewChild('canvas', { static: false }) canvasRef!: ElementRef<HTMLCanvasElement>;
 
+  private readonly PREFIX = isDevMode() ? `our-game/browser/` : '';
   private readonly destroyRef = inject(DestroyRef);
   private readonly RAD = Math.PI / 180;
   private readonly dx = 2;
@@ -366,6 +368,8 @@ export class FlappyBirdComponent implements AfterViewInit, OnDestroy {
     },
   };
 
+  private readonly bgOptions = ['flappy-bird/img/BG.png', 'flappy-bird/img/2BG.png'];
+
   ngAfterViewInit(): void {
     this.canvas = this.canvasRef.nativeElement;
     const context = this.canvas.getContext('2d');
@@ -451,6 +455,9 @@ export class FlappyBirdComponent implements AfterViewInit, OnDestroy {
         this.bird.flap();
         break;
       case this.state.gameOver:
+        // Select a random background for the new round
+        const chosenBg = this.bgOptions[Math.floor(Math.random() * this.bgOptions.length)];
+        this.bg.sprite.src = this.PREFIX + chosenBg;
         this.state.curr = this.state.getReady;
         this.bird.speed = 0;
         this.bird.y = 100;
@@ -463,9 +470,10 @@ export class FlappyBirdComponent implements AfterViewInit, OnDestroy {
   }
 
   private loadAssets(): void {
+    // Use default background for initial load
     const assetsToLoad = [
       { obj: this.gnd.sprite, src: 'flappy-bird/img/ground.png' },
-      { obj: this.bg.sprite, src: 'flappy-bird/img/BG.png' },
+      { obj: this.bg.sprite, src: this.bgOptions[0] },
       { obj: this.pipe.top.sprite, src: 'flappy-bird/img/toppipe.png' },
       { obj: this.pipe.bot.sprite, src: 'flappy-bird/img/botpipe.png' },
       { obj: this.UI.gameOver.sprite, src: 'flappy-bird/img/go.png' },
@@ -502,7 +510,7 @@ export class FlappyBirdComponent implements AfterViewInit, OnDestroy {
         console.error(`Failed to load asset: ${asset.src}`);
         checkAllLoaded();
       };
-      asset.obj.src = asset.src;
+      asset.obj.src = this.PREFIX + asset.src;
     });
 
     audioAssets.forEach((asset) => {
@@ -511,7 +519,7 @@ export class FlappyBirdComponent implements AfterViewInit, OnDestroy {
         console.error(`Failed to load audio: ${asset.src}`);
         checkAllLoaded();
       };
-      asset.obj.src = asset.src;
+      asset.obj.src = this.PREFIX + asset.src;
     });
   }
 
