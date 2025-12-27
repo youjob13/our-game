@@ -6,7 +6,7 @@ import { firstValueFrom } from 'rxjs';
 @Injectable({ providedIn: 'root' })
 export class CutsceneRepository {
   private readonly http = inject(HttpClient);
-  private readonly assetsPath = 'our-game/browser/cutscenes';
+  private readonly assetsPath = 'cutscenes';
 
   async getChapterById(chapterId: string): Promise<Chapter> {
     const url = `${this.assetsPath}/${chapterId}.json`;

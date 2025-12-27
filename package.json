@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "nx serve our-game",
     "build": "nx run-many -t build",
+    "build:production": "nx build our-game --configuration=production",
     "compile:no-emit": "nx run-many -t compile:no-emit",
     "watch": "nx build our-game --watch --configuration development",
     "test": "nx run-many -t test",
